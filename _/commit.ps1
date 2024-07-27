@@ -1,18 +1,29 @@
+# Check the status of the repository
 git status
+
+# Stage all changes
 git add .
+
+# Confirm staging
 git status
-ls -Recurse
+
+# Generate a recursive directory listing and save to CONTENTS.md in the parent directory
+ls -Recurse > ../CONTENTS.md
+
+# Check the status again
 git status
-ls -Recurse > ..\CONTENTS.md
+
+# Stage the CONTENTS.md file
+git add ../CONTENTS.md
+
+# Confirm staging of CONTENTS.md
 git status
-ls -Recurse
-git status
-git add ..
-git status 
-ls -Recurse
-git status
+
+# Commit the changes with a message
 git commit -m "here we go"
-git status
-ls -Recurse
-git status
+
+# Push the changes forcefully
 git push -f
+
+# Final status check
+git status
