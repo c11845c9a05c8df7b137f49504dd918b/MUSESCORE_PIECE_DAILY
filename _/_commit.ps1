@@ -1,4 +1,4 @@
-# Function to add color effects with background
+# Function to write text with foreground and background color effects
 function Write-Color {
     param (
         [string]$Text,
@@ -38,7 +38,7 @@ function Explosion {
     }
 }
 
-# Function to change background color in a crazy way
+# Function to change the background color randomly
 function CrazyBackground {
     $backgroundColors = [System.Enum]::GetValues([ConsoleColor])
     $randomColor = $backgroundColors | Get-Random
@@ -95,7 +95,7 @@ function Push-Changes {
     git push -f
 }
 
-# Add some terminal effects for fun
+# Function to add terminal effects for fun
 function Terminal-Effects {
     Flash -Times 3
     Explosion -Times 3
@@ -124,7 +124,6 @@ function Execute-GitCommand {
     Write-Color $message "Yellow" "Black"
     Invoke-Expression $command
 }
-
 
 # Main function to orchestrate the workflow
 function Main {
@@ -157,22 +156,24 @@ function Main {
     }
 
     Terminal-Effects
+
+    # Generate a dynamic commit message and commit changes
+    $commitMessage = Get-CommitMessage
+    Execute-GitCommand "git commit -m '$commitMessage'" "Committing changes with dynamic message: $commitMessage"
+
+    # Perform additional steps
+    CrazyBackground
+    Write-Color "Running ls -Recurse again..." "Cyan" "Black"
+    ls -Recurse
+
+    Execute-GitCommand "git push -f" "Pushing changes forcefully..."
+
+    CrazyBackground
+    Write-Color "Running ls -Recurse again..." "Cyan" "Black"
+    ls -Recurse
+
+    Execute-GitCommand "git status" "Final Git status check..."
 }
 
 # Run the main function
 Main
-
-$commitMessage = Get-CommitMessage
-Execute-GitCommand "git commit -m '$commitMessage'" "Committing changes with dynamic message: $commitMessage"
-
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-Execute-GitCommand "git push -f" "Pushing changes forcefully..."
-
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-Execute-GitCommand "git status" "Final Git status check..."
