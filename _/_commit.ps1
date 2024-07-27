@@ -101,6 +101,31 @@ function Terminal-Effects {
     Explosion -Times 3
 }
 
+# Function to generate a random hash of 11 characters
+function Generate-RandomHash {
+    $hash = [guid]::NewGuid().ToString("N").Substring(0, 11)
+    return $hash
+}
+
+# Function to generate a dynamic commit message
+function Get-CommitMessage {
+    $date = Get-Date -Format 'yyyy-MM-dd'
+    $hash = Generate-RandomHash
+    return "here we go - $date - $hash"
+}
+
+# Function to execute a Git command with color change
+function Execute-GitCommand {
+    param (
+        [string]$command,
+        [string]$message
+    )
+    CrazyBackground
+    Write-Color $message "Yellow" "Black"
+    Invoke-Expression $command
+}
+
+
 # Main function to orchestrate the workflow
 function Main {
     $steps = @(
@@ -136,3 +161,18 @@ function Main {
 
 # Run the main function
 Main
+
+$commitMessage = Get-CommitMessage
+Execute-GitCommand "git commit -m '$commitMessage'" "Committing changes with dynamic message: $commitMessage"
+
+CrazyBackground
+Write-Color "Running ls -Recurse again..." "Cyan" "Black"
+ls -Recurse
+
+Execute-GitCommand "git push -f" "Pushing changes forcefully..."
+
+CrazyBackground
+Write-Color "Running ls -Recurse again..." "Cyan" "Black"
+ls -Recurse
+
+Execute-GitCommand "git status" "Final Git status check..."
