@@ -16,10 +16,12 @@ function Flash {
     $backgroundColors = [System.Enum]::GetValues([ConsoleColor])
     for ($i = 0; $i -lt $Times; $i++) {
         $randomColor = $backgroundColors | Get-Random
-        Write-Host "`e[5m Flash! `e[0m" -ForegroundColor Yellow -BackgroundColor $randomColor
+        Write-Host "Flash!" -ForegroundColor Yellow -BackgroundColor $randomColor -NoNewline
         Start-Sleep -Milliseconds 100
-        Clear-Host
+        Write-Host "`r" -NoNewline
+        Start-Sleep -Milliseconds 100
     }
+    Write-Host "`n"
 }
 
 # Function to simulate explosions
@@ -44,101 +46,93 @@ function CrazyBackground {
     [console]::Clear()
 }
 
-# Check the status of the repository
-CrazyBackground
-Write-Color "Checking Git status..." "Yellow" "Black"
-git status
+# Function to check the status of the repository
+function Check-GitStatus {
+    CrazyBackground
+    Write-Color "Checking Git status..." "Yellow" "Black"
+    git status
+}
 
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse..." "Cyan" "Black"
-ls -Recurse
+# Function to run ls -Recurse
+function Run-LsRecurse {
+    CrazyBackground
+    Write-Color "Running ls -Recurse..." "Cyan" "Black"
+    ls -Recurse
+}
 
-# Stage all changes
-CrazyBackground
-Write-Color "Staging all changes..." "Green" "Black"
-git add .
+# Function to stage all changes
+function Stage-AllChanges {
+    CrazyBackground
+    Write-Color "Staging all changes..." "Green" "Black"
+    git add .
+}
 
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
+# Function to generate CONTENTS.md
+function Generate-Contents {
+    CrazyBackground
+    Write-Color "Generating CONTENTS.md..." "Magenta" "Black"
+    ls -Recurse > ../CONTENTS.md
+}
 
-# Confirm staging
-CrazyBackground
-Write-Color "Confirming staging..." "Yellow" "Black"
-git status
+# Function to stage CONTENTS.md
+function Stage-Contents {
+    CrazyBackground
+    Write-Color "Staging CONTENTS.md..." "Green" "Black"
+    git add ../CONTENTS.md
+}
 
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
+# Function to commit changes
+function Commit-Changes {
+    CrazyBackground
+    Write-Color "Committing changes with message 'here we go'..." "Blue" "Black"
+    git commit -m "here we go"
+}
 
-# Generate a recursive directory listing and save to CONTENTS.md in the parent directory
-CrazyBackground
-Write-Color "Generating CONTENTS.md..." "Magenta" "Black"
-ls -Recurse > ../CONTENTS.md
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Check the status again
-CrazyBackground
-Write-Color "Checking Git status again..." "Yellow" "Black"
-git status
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Stage the CONTENTS.md file
-CrazyBackground
-Write-Color "Staging CONTENTS.md..." "Green" "Black"
-git add ../CONTENTS.md
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Confirm staging of CONTENTS.md
-CrazyBackground
-Write-Color "Confirming staging of CONTENTS.md..." "Yellow" "Black"
-git status
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Commit the changes with a message
-CrazyBackground
-Write-Color "Committing changes with message 'here we go'..." "Blue" "Black"
-git commit -m "here we go"
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Push the changes forcefully
-CrazyBackground
-Write-Color "Pushing changes forcefully..." "Red" "Black"
-git push -f
-
-# Run an ls -Recurse with color effects
-CrazyBackground
-Write-Color "Running ls -Recurse again..." "Cyan" "Black"
-ls -Recurse
-
-# Final status check
-CrazyBackground
-Write-Color "Final Git status check..." "Yellow" "Black"
-git status
+# Function to push changes
+function Push-Changes {
+    CrazyBackground
+    Write-Color "Pushing changes forcefully..." "Red" "Black"
+    git push -f
+}
 
 # Add some terminal effects for fun
-Flash -Times 3
-Explosion -Times 3
+function Terminal-Effects {
+    Flash -Times 3
+    Explosion -Times 3
+}
+
+# Main function to orchestrate the workflow
+function Main {
+    $steps = @(
+        "Check-GitStatus",
+        "Run-LsRecurse",
+        "Stage-AllChanges",
+        "Run-LsRecurse",
+        "Check-GitStatus",
+        "Run-LsRecurse",
+        "Generate-Contents",
+        "Run-LsRecurse",
+        "Check-GitStatus",
+        "Run-LsRecurse",
+        "Stage-Contents",
+        "Run-LsRecurse",
+        "Check-GitStatus",
+        "Run-LsRecurse",
+        "Commit-Changes",
+        "Run-LsRecurse",
+        "Push-Changes",
+        "Run-LsRecurse",
+        "Check-GitStatus"
+    )
+
+    $orderedSteps = $steps | Get-Random -Count $steps.Count
+
+    foreach ($step in $orderedSteps) {
+        Invoke-Expression $step
+    }
+
+    Terminal-Effects
+}
+
+# Run the main function
+Main
