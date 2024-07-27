@@ -2,20 +2,9 @@
 function Write-Color {
     param (
         [string]$Text,
-        [string]$Color
+        [ConsoleColor]$Color
     )
-    $Colors = @{
-        "Red" = "`e[31m"
-        "Green" = "`e[32m"
-        "Yellow" = "`e[33m"
-        "Blue" = "`e[34m"
-        "Magenta" = "`e[35m"
-        "Cyan" = "`e[36m"
-        "White" = "`e[37m"
-        "Reset" = "`e[0m"
-    }
-    $ColorCode = $Colors[$Color]
-    Write-Host "$ColorCode$Text$($Colors["Reset"])"
+    Write-Host $Text -ForegroundColor $Color
 }
 
 # Function to create flashing effects
@@ -24,9 +13,12 @@ function Flash {
         [int]$Times
     )
     for ($i = 0; $i -lt $Times; $i++) {
-        Write-Host "`e[5m Flash! `e[0m"
+        Write-Host "Flash!" -ForegroundColor Yellow -NoNewline
+        Start-Sleep -Milliseconds 100
+        Write-Host "`r" -NoNewline
         Start-Sleep -Milliseconds 100
     }
+    Write-Host "`n"
 }
 
 # Function to simulate explosions
