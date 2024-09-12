@@ -92,7 +92,7 @@ function Commit-Changes {
 function Push-Changes {
     CrazyBackground
     Write-Color "Pushing changes forcefully..." "Red" "Black"
-    #git push -f
+    git push -f
 }
 
 # Function to add terminal effects for fun
@@ -144,7 +144,7 @@ function Main {
         "Run-LsRecurse",
         "Commit-Changes",
         "Run-LsRecurse",
-        #"Push-Changes",
+        "Push-Changes",
         "Run-LsRecurse",
         "Check-GitStatus"
     )
